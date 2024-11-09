@@ -1,0 +1,515 @@
+{
+    "name": "distillation-7alloy50w-model",
+    "bohrium_config": {
+        "username": "",
+        "password": "",
+        "project_id": 17005,
+        "_comment": "all"
+    },
+    "default_step_config": {
+        "template_config": {
+            "image": "registry.dp.tech/dptech/prod-11881/dpgen2-utils:1.2",
+            "_comment": "all"
+        },
+        "_comment": "all"
+    },
+    "step_configs": {
+        "run_train_config": {
+            "template_config": {
+                "image": "registry.dp.tech/dptech/prod-12166/dp-v3-b4-dpgen2-zbl:cuda-dp-dpgen",
+                "_comment": "all"
+            },
+            "executor": {
+                "type": "dispatcher",
+                "retry_on_submission_error": 10,
+                "image_pull_policy": "IfNotPresent",
+                "machine_dict": {
+                    "batch_type": "Bohrium",
+                    "context_type": "Bohrium",
+                    "remote_profile": {
+                        "input_data": {
+                            "job_type": "container",
+                            "platform": "ali",
+                            "scass_type": "1 * NVIDIA V100_32g"
+                        }
+                    }
+                }
+            },
+            "_comment": "all"
+        },
+        "run_explore_config": {
+            "template_config": {
+                "image": "registry.dp.tech/dptech/prod-12166/dp-v3-b4-dpgen2-zbl:cuda-dp-dpgen",
+                "_comment": "all"
+            },
+            "continue_on_success_ratio": 0.80,
+            "executor": {
+                "type": "dispatcher",
+                "retry_on_submission_error": 10,
+                "image_pull_policy": "IfNotPresent",
+                "machine_dict": {
+                    "batch_type": "Bohrium",
+                    "context_type": "Bohrium",
+                    "remote_profile": {
+                        "input_data": {
+                            "job_type": "container",
+                            "platform": "ali",
+                            "scass_type": "1 * NVIDIA V100_32g"
+                        }
+                    }
+                }
+            },
+            "template_slice_config": {
+                "group_size": 1,
+                "pool_size": 1
+            },
+            "_comment": "all"
+        },
+        "run_fp_config": {
+            "template_config": {
+                "image": "registry.dp.tech/dptech/prod-12166/dp-v3-b4-dpgen2-zbl:cuda-dp-dpgen",
+                "_comment": "all"
+            },
+            "continue_on_success_ratio": 0.80,
+            "executor": {
+                "type": "dispatcher",
+                "retry_on_submission_error": 10,
+                "image_pull_policy": "IfNotPresent",
+                "machine_dict": {
+                    "batch_type": "Bohrium",
+                    "context_type": "Bohrium",
+                    "remote_profile": {
+                        "input_data": {
+                            "job_type": "container",
+                            "platform": "ali",
+                            "scass_type": "c8_m32_1 * NVIDIA V100"
+                        }
+                    }
+                }
+            },
+            "template_slice_config": {
+                "group_size": 100,
+                "pool_size": 1
+            },
+            "_comment": "all"
+        },
+        "_comment": "all"
+    },
+    "upload_python_packages": [
+        "/opt/deepmd-kit-3.0.0b3/lib/python3.10/site-packages/dpgen2",
+        "/opt/deepmd-kit-3.0.0b3/lib/python3.10/site-packages/dpdata"
+    ],
+    "inputs": {
+  	"type_map": [
+            "Ti",
+            "Ta",
+            "Al",
+            "Cr",
+	    "Fe",
+	    "Ni",
+	    "Co"
+        ],
+        "mixed_type": false,
+        "mass_map": [
+		   47.867,
+		   180.95,
+		   26.982,
+		   51.996,
+		   55.845,
+		   58.693,
+		   58.933
+		   
+        ],
+        "init_data_prefix": null,
+	"init_data_sys": [
+"./train_predict/____data_updated_sample_POSCAR_0_0_0_POSCAR_01x01x01_02_md_sys_0013_0003_0008_0003_0002_0061_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_0_POSCAR_01x01x01_02_md_sys_0013_0003_0008_0003_0002_0061_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_0_POSCAR_01x01x01_02_md_sys_0014_0016_0003_0004_0051_0020_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_1_POSCAR_01x01x01_02_md_sys_0002_0009_0019_0008_0034_0034_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_1_POSCAR_01x01x01_02_md_sys_0009_0003_0015_0006_0003_0053_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_1_POSCAR_01x01x01_02_md_sys_0009_0003_0015_0006_0003_0053_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_2_POSCAR_01x01x01_02_md_sys_0003_0004_0003_0020_0017_0029_0032_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_0_2_POSCAR_01x01x01_02_md_sys_0007_0001_0002_0020_0016_0030_0032_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_1_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0001_0002_0063_0015_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_1_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0001_0002_0063_0015_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_1_0_POSCAR_01x01x01_02_md_sys_0013_0003_0009_0004_0001_0055_0023_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_1_1_POSCAR_01x01x01_02_md_sys_0004_0001_0008_0012_0014_0039_0030_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_1_2_POSCAR_01x01x01_02_md_sys_0004_0002_0006_0025_0017_0023_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_0_POSCAR_01x01x01_02_md_sys_0008_0006_0012_0001_0002_0055_0024_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_0_POSCAR_01x01x01_02_md_sys_0008_0006_0012_0001_0002_0055_0024_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_0_POSCAR_01x01x01_02_md_sys_0011_0002_0013_0003_0003_0055_0021_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_1_POSCAR_01x01x01_02_md_sys_0007_0002_0004_0017_0010_0032_0032_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_1_POSCAR_01x01x01_02_md_sys_0013_0018_0002_0002_0061_0012_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_1_POSCAR_01x01x01_02_md_sys_0013_0018_0002_0002_0061_0012_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_2_POSCAR_01x01x01_02_md_sys_0002_0005_0020_0019_0027_0035_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_2_POSCAR_01x01x01_02_md_sys_0004_0002_0006_0016_0007_0050_0023_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_3_POSCAR_01x01x01_02_md_sys_0004_0001_0003_0023_0014_0029_0034_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_2_4_POSCAR_01x01x01_02_md_sys_0001_0001_0002_0019_0011_0031_0043_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_3_0_POSCAR_01x01x01_02_md_sys_0009_0002_0014_0006_0003_0057_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_3_0_POSCAR_01x01x01_02_md_sys_0009_0002_0014_0006_0003_0057_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_3_1_POSCAR_01x01x01_02_md_sys_0011_0003_0012_0001_0003_0059_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_3_1_POSCAR_01x01x01_02_md_sys_0011_0003_0012_0001_0003_0059_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_3_3_deepmd_Ti1Ta4Al5Cr28Fe17Ni24Co29_train",
+"./train_predict/____data_updated_sample_POSCAR_0_3_4_POSCAR_01x01x01_02_md_sys_0005_0003_0007_0021_0014_0026_0032_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_4_0_POSCAR_01x01x01_02_md_sys_0014_0001_0011_0004_0003_0057_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_4_0_POSCAR_01x01x01_02_md_sys_0014_0001_0011_0004_0003_0057_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_4_1_POSCAR_01x01x01_02_md_sys_0014_0005_0008_0003_0008_0054_0016_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_0_4_1_POSCAR_01x01x01_02_md_sys_0014_0005_0008_0003_0008_0054_0016_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_0_POSCAR_01x01x01_02_md_sys_0008_0019_0002_0002_0062_0014_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0005_0001_0055_0020_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0005_0001_0055_0020_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_1_POSCAR_01x01x01_02_md_sys_0005_0009_0011_0011_0039_0030_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_1_POSCAR_01x01x01_02_md_sys_0010_0021_0003_0063_0010_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_1_POSCAR_01x01x01_02_md_sys_0010_0021_0003_0063_0010_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_0_2_POSCAR_01x01x01_02_md_sys_0002_0003_0005_0025_0015_0024_0033_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_1_0_POSCAR_01x01x01_02_md_sys_0007_0004_0011_0006_0002_0064_0014_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_1_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0003_0003_0061_0014_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_1_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0003_0003_0061_0014_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_1_1_POSCAR_01x01x01_02_md_sys_0007_0001_0009_0006_0009_0045_0025_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_1_2_POSCAR_01x01x01_02_md_sys_0003_0001_0004_0025_0018_0020_0032_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_1_2_POSCAR_01x01x01_02_md_sys_0007_0001_0007_0013_0011_0034_0035_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_0_POSCAR_01x01x01_02_md_sys_0011_0002_0013_0001_0004_0057_0020_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_0_POSCAR_01x01x01_02_md_sys_0011_0002_0013_0001_0004_0057_0020_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_0_POSCAR_01x01x01_02_md_sys_0015_0009_0003_0003_0061_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_1_POSCAR_01x01x01_02_md_sys_0003_0010_0014_0007_0039_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_1_POSCAR_01x01x01_02_md_sys_0010_0004_0013_0007_0006_0048_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_1_POSCAR_01x01x01_02_md_sys_0010_0004_0013_0007_0006_0048_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_2_POSCAR_01x01x01_02_md_sys_0001_0003_0029_0017_0025_0033_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_2_POSCAR_01x01x01_02_md_sys_0007_0001_0006_0016_0007_0037_0036_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_2_4_POSCAR_01x01x01_02_md_sys_0003_0001_0002_0017_0016_0034_0035_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_3_0_POSCAR_01x01x01_02_md_sys_0010_0001_0016_0003_0003_0054_0021_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_3_0_POSCAR_01x01x01_02_md_sys_0010_0001_0016_0003_0003_0054_0021_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_3_2_POSCAR_01x01x01_02_md_sys_0004_0003_0004_0011_0009_0038_0039_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_3_4_POSCAR_01x01x01_02_md_sys_0001_0003_0004_0026_0018_0025_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_4_0_POSCAR_01x01x01_02_md_sys_0011_0014_0002_0004_0059_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_4_0_POSCAR_01x01x01_02_md_sys_0011_0014_0002_0004_0059_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_4_1_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0006_0002_0056_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_4_1_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0006_0002_0056_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_1_4_2_POSCAR_01x01x01_02_md_sys_0004_0002_0009_0014_0011_0037_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0002_0003_0063_0015_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0002_0003_0063_0015_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_0_POSCAR_01x01x01_02_md_sys_0014_0002_0010_0004_0003_0062_0013_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_1_POSCAR_01x01x01_02_md_sys_0003_0001_0009_0014_0008_0042_0030_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_1_POSCAR_01x01x01_02_md_sys_0009_0016_0003_0003_0062_0015_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_1_POSCAR_01x01x01_02_md_sys_0009_0016_0003_0003_0062_0015_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_2_POSCAR_01x01x01_02_md_sys_0002_0005_0028_0018_0024_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_0_2_POSCAR_01x01x01_02_md_sys_0003_0003_0007_0021_0013_0034_0027_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_0_POSCAR_01x01x01_02_md_sys_0006_0007_0011_0001_0005_0054_0024_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_0_POSCAR_01x01x01_02_md_sys_0006_0007_0011_0001_0005_0054_0024_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_0_POSCAR_01x01x01_02_md_sys_0013_0001_0010_0002_0003_0059_0020_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_1_POSCAR_01x01x01_02_md_sys_0003_0001_0008_0015_0012_0048_0015_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_1_POSCAR_01x01x01_02_md_sys_0010_0003_0011_0001_0004_0060_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_1_POSCAR_01x01x01_02_md_sys_0010_0003_0011_0001_0004_0060_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_1_2_POSCAR_01x01x01_02_md_sys_0002_0001_0003_0023_0014_0028_0036_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_0_POSCAR_01x01x01_02_md_sys_0007_0003_0013_0005_0003_0061_0016_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_0_POSCAR_01x01x01_02_md_sys_0010_0002_0011_0004_0004_0059_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_0_POSCAR_01x01x01_02_md_sys_0010_0002_0011_0004_0004_0059_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_1_POSCAR_01x01x01_02_md_sys_0007_0005_0006_0013_0006_0036_0029_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_1_POSCAR_01x01x01_02_md_sys_0008_0004_0009_0004_0003_0059_0021_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_1_POSCAR_01x01x01_02_md_sys_0008_0004_0009_0004_0003_0059_0021_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_2_POSCAR_01x01x01_02_md_sys_0002_0002_0003_0016_0020_0029_0036_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_2_POSCAR_01x01x01_02_md_sys_0004_0002_0005_0012_0017_0037_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_3_deepmd_Ti2Al7Cr30Fe23Ni12Co34_train",
+"./train_predict/____data_updated_sample_POSCAR_2_2_4_POSCAR_01x01x01_02_md_sys_0005_0005_0029_0010_0018_0041_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_3_0_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0001_0004_0058_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_3_0_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0001_0004_0058_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_3_1_POSCAR_01x01x01_02_md_sys_0016_0003_0006_0003_0001_0064_0015_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_3_1_POSCAR_01x01x01_02_md_sys_0016_0003_0006_0003_0001_0064_0015_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_3_2_POSCAR_01x01x01_02_md_sys_0004_0001_0007_0021_0010_0037_0028_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_3_3_POSCAR_01x01x01_02_md_sys_0006_0001_0003_0027_0013_0028_0030_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_4_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0003_0004_0055_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_4_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0003_0004_0055_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_4_1_POSCAR_01x01x01_02_md_sys_0014_0002_0010_0003_0006_0054_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_4_1_POSCAR_01x01x01_02_md_sys_0014_0002_0010_0003_0006_0054_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_2_4_2_POSCAR_01x01x01_02_md_sys_0005_0002_0007_0021_0009_0040_0024_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0001_0006_0062_0014_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0001_0006_0062_0014_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_0_1_POSCAR_01x01x01_02_md_sys_0008_0001_0015_0004_0005_0058_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_0_1_POSCAR_01x01x01_02_md_sys_0008_0001_0015_0004_0005_0058_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_0_2_POSCAR_01x01x01_02_md_sys_0004_0001_0009_0021_0012_0038_0023_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_1_0_POSCAR_01x01x01_02_md_sys_0012_0001_0012_0002_0004_0064_0013_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_1_0_POSCAR_01x01x01_02_md_sys_0012_0001_0012_0002_0004_0064_0013_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_1_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0003_0002_0060_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_1_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0003_0002_0060_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_1_2_POSCAR_01x01x01_02_md_sys_0004_0001_0008_0016_0017_0032_0030_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_1_3_POSCAR_01x01x01_02_md_sys_0004_0005_0034_0015_0020_0030_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_2_0_POSCAR_01x01x01_02_md_sys_0013_0001_0009_0002_0004_0071_0008_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_2_0_POSCAR_01x01x01_02_md_sys_0013_0001_0009_0002_0004_0071_0008_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_2_3_deepmd_Ti4Ta2Al6Cr23Fe13Ni28Co32_train",
+"./train_predict/____data_updated_sample_POSCAR_3_2_4_POSCAR_01x01x01_02_md_sys_0004_0001_0001_0031_0016_0020_0035_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_3_0_POSCAR_01x01x01_02_md_sys_0011_0003_0009_0005_0003_0060_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_3_0_POSCAR_01x01x01_02_md_sys_0011_0003_0009_0005_0003_0060_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_3_1_POSCAR_01x01x01_02_md_sys_0012_0002_0009_0007_0003_0056_0019_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_3_1_POSCAR_01x01x01_02_md_sys_0012_0002_0009_0007_0003_0056_0019_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_3_3_POSCAR_01x01x01_02_md_sys_0002_0003_0017_0021_0024_0041_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_3_4_POSCAR_01x01x01_02_md_sys_0001_0005_0024_0019_0023_0036_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_4_0_POSCAR_01x01x01_02_md_sys_0009_0005_0009_0001_0002_0059_0023_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_4_0_POSCAR_01x01x01_02_md_sys_0009_0005_0009_0001_0002_0059_0023_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_4_1_POSCAR_01x01x01_02_md_sys_0008_0002_0014_0004_0065_0015_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_4_1_POSCAR_01x01x01_02_md_sys_0008_0002_0014_0004_0065_0015_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_4_2_POSCAR_01x01x01_02_md_sys_0004_0001_0009_0016_0015_0042_0021_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_3_4_3_POSCAR_01x01x01_02_md_sys_0001_0001_0003_0030_0023_0022_0028_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_0_0_POSCAR_01x01x01_02_md_sys_0008_0003_0015_0003_0001_0060_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_0_0_POSCAR_01x01x01_02_md_sys_0008_0003_0015_0003_0001_0060_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_0_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0068_0012_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_0_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0068_0012_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_0_2_POSCAR_01x01x01_02_md_sys_0006_0007_0016_0014_0039_0026_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_1_0_POSCAR_01x01x01_02_md_sys_0016_0002_0009_0002_0062_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_1_0_POSCAR_01x01x01_02_md_sys_0016_0002_0009_0002_0062_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_1_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0062_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_1_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0062_0018_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_1_2_POSCAR_01x01x01_02_md_sys_0004_0010_0014_0010_0036_0034_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_2_0_POSCAR_01x01x01_02_md_sys_0014_0002_0011_0001_0003_0060_0017_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_2_0_POSCAR_01x01x01_02_md_sys_0014_0002_0011_0001_0003_0060_0017_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_2_1_POSCAR_01x01x01_02_md_sys_0011_0004_0010_0002_0002_0068_0011_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_2_1_POSCAR_01x01x01_02_md_sys_0011_0004_0010_0002_0002_0068_0011_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_2_2_POSCAR_01x01x01_02_md_sys_0004_0006_0017_0013_0037_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_2_3_POSCAR_01x01x01_02_md_sys_0003_0002_0020_0016_0031_0036_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_0_POSCAR_01x01x01_02_md_sys_0009_0003_0012_0005_0059_0020_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_0_POSCAR_01x01x01_02_md_sys_0009_0003_0012_0005_0059_0020_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_1_POSCAR_01x01x01_02_md_sys_0007_0001_0018_0002_0002_0055_0023_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_1_POSCAR_01x01x01_02_md_sys_0007_0001_0018_0002_0002_0055_0023_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_2_POSCAR_01x01x01_02_md_sys_0004_0001_0009_0018_0009_0036_0031_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_3_POSCAR_01x01x01_02_md_sys_0003_0003_0009_0027_0018_0025_0023_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_3_4_POSCAR_01x01x01_02_md_sys_0002_0001_0004_0027_0019_0029_0026_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_4_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0001_0005_0058_0018_deepmd_deepmd_train",
+"./train_predict/____data_updated_sample_POSCAR_4_4_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0001_0005_0058_0018_deepmd_train",
+"./train_predict/____data_updated_test_POSCAR_01x01x01_02_md_sys_0014_0016_0003_0004_0051_0020_deepmd_train"
+],
+"valid_data_sys": [
+"./valid_predict/____data_updated_sample_POSCAR_0_0_0_POSCAR_01x01x01_02_md_sys_0013_0003_0008_0003_0002_0061_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_0_POSCAR_01x01x01_02_md_sys_0013_0003_0008_0003_0002_0061_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_0_POSCAR_01x01x01_02_md_sys_0014_0016_0003_0004_0051_0020_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_1_POSCAR_01x01x01_02_md_sys_0002_0009_0019_0008_0034_0034_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_1_POSCAR_01x01x01_02_md_sys_0009_0003_0015_0006_0003_0053_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_1_POSCAR_01x01x01_02_md_sys_0009_0003_0015_0006_0003_0053_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_2_POSCAR_01x01x01_02_md_sys_0003_0004_0003_0020_0017_0029_0032_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_0_2_POSCAR_01x01x01_02_md_sys_0007_0001_0002_0020_0016_0030_0032_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_1_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0001_0002_0063_0015_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_1_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0001_0002_0063_0015_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_1_0_POSCAR_01x01x01_02_md_sys_0013_0003_0009_0004_0001_0055_0023_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_1_1_POSCAR_01x01x01_02_md_sys_0004_0001_0008_0012_0014_0039_0030_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_1_2_POSCAR_01x01x01_02_md_sys_0004_0002_0006_0025_0017_0023_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_0_POSCAR_01x01x01_02_md_sys_0008_0006_0012_0001_0002_0055_0024_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_0_POSCAR_01x01x01_02_md_sys_0008_0006_0012_0001_0002_0055_0024_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_0_POSCAR_01x01x01_02_md_sys_0011_0002_0013_0003_0003_0055_0021_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_1_POSCAR_01x01x01_02_md_sys_0007_0002_0004_0017_0010_0032_0032_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_1_POSCAR_01x01x01_02_md_sys_0013_0018_0002_0002_0061_0012_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_1_POSCAR_01x01x01_02_md_sys_0013_0018_0002_0002_0061_0012_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_2_POSCAR_01x01x01_02_md_sys_0002_0005_0020_0019_0027_0035_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_2_POSCAR_01x01x01_02_md_sys_0004_0002_0006_0016_0007_0050_0023_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_3_POSCAR_01x01x01_02_md_sys_0004_0001_0003_0023_0014_0029_0034_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_2_4_POSCAR_01x01x01_02_md_sys_0001_0001_0002_0019_0011_0031_0043_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_3_0_POSCAR_01x01x01_02_md_sys_0009_0002_0014_0006_0003_0057_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_3_0_POSCAR_01x01x01_02_md_sys_0009_0002_0014_0006_0003_0057_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_3_1_POSCAR_01x01x01_02_md_sys_0011_0003_0012_0001_0003_0059_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_3_1_POSCAR_01x01x01_02_md_sys_0011_0003_0012_0001_0003_0059_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_3_3_deepmd_Ti1Ta4Al5Cr28Fe17Ni24Co29_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_3_4_POSCAR_01x01x01_02_md_sys_0005_0003_0007_0021_0014_0026_0032_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_4_0_POSCAR_01x01x01_02_md_sys_0014_0001_0011_0004_0003_0057_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_4_0_POSCAR_01x01x01_02_md_sys_0014_0001_0011_0004_0003_0057_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_4_1_POSCAR_01x01x01_02_md_sys_0014_0005_0008_0003_0008_0054_0016_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_0_4_1_POSCAR_01x01x01_02_md_sys_0014_0005_0008_0003_0008_0054_0016_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_0_POSCAR_01x01x01_02_md_sys_0008_0019_0002_0002_0062_0014_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0005_0001_0055_0020_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0005_0001_0055_0020_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_1_POSCAR_01x01x01_02_md_sys_0005_0009_0011_0011_0039_0030_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_1_POSCAR_01x01x01_02_md_sys_0010_0021_0003_0063_0010_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_1_POSCAR_01x01x01_02_md_sys_0010_0021_0003_0063_0010_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_0_2_POSCAR_01x01x01_02_md_sys_0002_0003_0005_0025_0015_0024_0033_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_1_0_POSCAR_01x01x01_02_md_sys_0007_0004_0011_0006_0002_0064_0014_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_1_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0003_0003_0061_0014_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_1_0_POSCAR_01x01x01_02_md_sys_0010_0003_0014_0003_0003_0061_0014_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_1_1_POSCAR_01x01x01_02_md_sys_0007_0001_0009_0006_0009_0045_0025_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_1_2_POSCAR_01x01x01_02_md_sys_0003_0001_0004_0025_0018_0020_0032_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_1_2_POSCAR_01x01x01_02_md_sys_0007_0001_0007_0013_0011_0034_0035_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_0_POSCAR_01x01x01_02_md_sys_0011_0002_0013_0001_0004_0057_0020_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_0_POSCAR_01x01x01_02_md_sys_0011_0002_0013_0001_0004_0057_0020_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_0_POSCAR_01x01x01_02_md_sys_0015_0009_0003_0003_0061_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_1_POSCAR_01x01x01_02_md_sys_0003_0010_0014_0007_0039_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_1_POSCAR_01x01x01_02_md_sys_0010_0004_0013_0007_0006_0048_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_1_POSCAR_01x01x01_02_md_sys_0010_0004_0013_0007_0006_0048_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_2_POSCAR_01x01x01_02_md_sys_0001_0003_0029_0017_0025_0033_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_2_POSCAR_01x01x01_02_md_sys_0007_0001_0006_0016_0007_0037_0036_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_2_4_POSCAR_01x01x01_02_md_sys_0003_0001_0002_0017_0016_0034_0035_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_3_0_POSCAR_01x01x01_02_md_sys_0010_0001_0016_0003_0003_0054_0021_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_3_0_POSCAR_01x01x01_02_md_sys_0010_0001_0016_0003_0003_0054_0021_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_3_2_POSCAR_01x01x01_02_md_sys_0004_0003_0004_0011_0009_0038_0039_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_3_4_POSCAR_01x01x01_02_md_sys_0001_0003_0004_0026_0018_0025_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_4_0_POSCAR_01x01x01_02_md_sys_0011_0014_0002_0004_0059_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_4_0_POSCAR_01x01x01_02_md_sys_0011_0014_0002_0004_0059_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_4_1_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0006_0002_0056_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_4_1_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0006_0002_0056_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_1_4_2_POSCAR_01x01x01_02_md_sys_0004_0002_0009_0014_0011_0037_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0002_0003_0063_0015_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0002_0003_0063_0015_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_0_POSCAR_01x01x01_02_md_sys_0014_0002_0010_0004_0003_0062_0013_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_1_POSCAR_01x01x01_02_md_sys_0003_0001_0009_0014_0008_0042_0030_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_1_POSCAR_01x01x01_02_md_sys_0009_0016_0003_0003_0062_0015_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_1_POSCAR_01x01x01_02_md_sys_0009_0016_0003_0003_0062_0015_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_2_POSCAR_01x01x01_02_md_sys_0002_0005_0028_0018_0024_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_0_2_POSCAR_01x01x01_02_md_sys_0003_0003_0007_0021_0013_0034_0027_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_0_POSCAR_01x01x01_02_md_sys_0006_0007_0011_0001_0005_0054_0024_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_0_POSCAR_01x01x01_02_md_sys_0006_0007_0011_0001_0005_0054_0024_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_0_POSCAR_01x01x01_02_md_sys_0013_0001_0010_0002_0003_0059_0020_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_1_POSCAR_01x01x01_02_md_sys_0003_0001_0008_0015_0012_0048_0015_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_1_POSCAR_01x01x01_02_md_sys_0010_0003_0011_0001_0004_0060_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_1_POSCAR_01x01x01_02_md_sys_0010_0003_0011_0001_0004_0060_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_1_2_POSCAR_01x01x01_02_md_sys_0002_0001_0003_0023_0014_0028_0036_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_0_POSCAR_01x01x01_02_md_sys_0007_0003_0013_0005_0003_0061_0016_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_0_POSCAR_01x01x01_02_md_sys_0010_0002_0011_0004_0004_0059_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_0_POSCAR_01x01x01_02_md_sys_0010_0002_0011_0004_0004_0059_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_1_POSCAR_01x01x01_02_md_sys_0007_0005_0006_0013_0006_0036_0029_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_1_POSCAR_01x01x01_02_md_sys_0008_0004_0009_0004_0003_0059_0021_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_1_POSCAR_01x01x01_02_md_sys_0008_0004_0009_0004_0003_0059_0021_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_2_POSCAR_01x01x01_02_md_sys_0002_0002_0003_0016_0020_0029_0036_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_2_POSCAR_01x01x01_02_md_sys_0004_0002_0005_0012_0017_0037_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_3_deepmd_Ti2Al7Cr30Fe23Ni12Co34_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_2_4_POSCAR_01x01x01_02_md_sys_0005_0005_0029_0010_0018_0041_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_3_0_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0001_0004_0058_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_3_0_POSCAR_01x01x01_02_md_sys_0007_0002_0017_0001_0004_0058_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_3_1_POSCAR_01x01x01_02_md_sys_0016_0003_0006_0003_0001_0064_0015_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_3_1_POSCAR_01x01x01_02_md_sys_0016_0003_0006_0003_0001_0064_0015_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_3_2_POSCAR_01x01x01_02_md_sys_0004_0001_0007_0021_0010_0037_0028_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_3_3_POSCAR_01x01x01_02_md_sys_0006_0001_0003_0027_0013_0028_0030_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_4_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0003_0004_0055_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_4_0_POSCAR_01x01x01_02_md_sys_0008_0002_0017_0003_0004_0055_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_4_1_POSCAR_01x01x01_02_md_sys_0014_0002_0010_0003_0006_0054_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_4_1_POSCAR_01x01x01_02_md_sys_0014_0002_0010_0003_0006_0054_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_2_4_2_POSCAR_01x01x01_02_md_sys_0005_0002_0007_0021_0009_0040_0024_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0001_0006_0062_0014_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_0_0_POSCAR_01x01x01_02_md_sys_0010_0002_0013_0001_0006_0062_0014_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_0_1_POSCAR_01x01x01_02_md_sys_0008_0001_0015_0004_0005_0058_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_0_1_POSCAR_01x01x01_02_md_sys_0008_0001_0015_0004_0005_0058_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_0_2_POSCAR_01x01x01_02_md_sys_0004_0001_0009_0021_0012_0038_0023_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_1_0_POSCAR_01x01x01_02_md_sys_0012_0001_0012_0002_0004_0064_0013_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_1_0_POSCAR_01x01x01_02_md_sys_0012_0001_0012_0002_0004_0064_0013_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_1_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0003_0002_0060_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_1_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0003_0002_0060_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_1_2_POSCAR_01x01x01_02_md_sys_0004_0001_0008_0016_0017_0032_0030_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_1_3_POSCAR_01x01x01_02_md_sys_0004_0005_0034_0015_0020_0030_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_2_0_POSCAR_01x01x01_02_md_sys_0013_0001_0009_0002_0004_0071_0008_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_2_0_POSCAR_01x01x01_02_md_sys_0013_0001_0009_0002_0004_0071_0008_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_2_3_deepmd_Ti4Ta2Al6Cr23Fe13Ni28Co32_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_2_4_POSCAR_01x01x01_02_md_sys_0004_0001_0001_0031_0016_0020_0035_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_3_0_POSCAR_01x01x01_02_md_sys_0011_0003_0009_0005_0003_0060_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_3_0_POSCAR_01x01x01_02_md_sys_0011_0003_0009_0005_0003_0060_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_3_1_POSCAR_01x01x01_02_md_sys_0012_0002_0009_0007_0003_0056_0019_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_3_1_POSCAR_01x01x01_02_md_sys_0012_0002_0009_0007_0003_0056_0019_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_3_3_POSCAR_01x01x01_02_md_sys_0002_0003_0017_0021_0024_0041_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_3_4_POSCAR_01x01x01_02_md_sys_0001_0005_0024_0019_0023_0036_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_4_0_POSCAR_01x01x01_02_md_sys_0009_0005_0009_0001_0002_0059_0023_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_4_0_POSCAR_01x01x01_02_md_sys_0009_0005_0009_0001_0002_0059_0023_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_4_1_POSCAR_01x01x01_02_md_sys_0008_0002_0014_0004_0065_0015_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_4_1_POSCAR_01x01x01_02_md_sys_0008_0002_0014_0004_0065_0015_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_4_2_POSCAR_01x01x01_02_md_sys_0004_0001_0009_0016_0015_0042_0021_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_3_4_3_POSCAR_01x01x01_02_md_sys_0001_0001_0003_0030_0023_0022_0028_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_0_0_POSCAR_01x01x01_02_md_sys_0008_0003_0015_0003_0001_0060_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_0_0_POSCAR_01x01x01_02_md_sys_0008_0003_0015_0003_0001_0060_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_0_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0068_0012_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_0_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0068_0012_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_0_2_POSCAR_01x01x01_02_md_sys_0006_0007_0016_0014_0039_0026_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_1_0_POSCAR_01x01x01_02_md_sys_0016_0002_0009_0002_0062_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_1_0_POSCAR_01x01x01_02_md_sys_0016_0002_0009_0002_0062_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_1_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0062_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_1_1_POSCAR_01x01x01_02_md_sys_0014_0011_0001_0002_0062_0018_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_1_2_POSCAR_01x01x01_02_md_sys_0004_0010_0014_0010_0036_0034_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_2_0_POSCAR_01x01x01_02_md_sys_0014_0002_0011_0001_0003_0060_0017_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_2_0_POSCAR_01x01x01_02_md_sys_0014_0002_0011_0001_0003_0060_0017_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_2_1_POSCAR_01x01x01_02_md_sys_0011_0004_0010_0002_0002_0068_0011_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_2_1_POSCAR_01x01x01_02_md_sys_0011_0004_0010_0002_0002_0068_0011_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_2_2_POSCAR_01x01x01_02_md_sys_0004_0006_0017_0013_0037_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_2_3_POSCAR_01x01x01_02_md_sys_0003_0002_0020_0016_0031_0036_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_0_POSCAR_01x01x01_02_md_sys_0009_0003_0012_0005_0059_0020_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_0_POSCAR_01x01x01_02_md_sys_0009_0003_0012_0005_0059_0020_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_1_POSCAR_01x01x01_02_md_sys_0007_0001_0018_0002_0002_0055_0023_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_1_POSCAR_01x01x01_02_md_sys_0007_0001_0018_0002_0002_0055_0023_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_2_POSCAR_01x01x01_02_md_sys_0004_0001_0009_0018_0009_0036_0031_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_3_POSCAR_01x01x01_02_md_sys_0003_0003_0009_0027_0018_0025_0023_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_3_4_POSCAR_01x01x01_02_md_sys_0002_0001_0004_0027_0019_0029_0026_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_4_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0001_0005_0058_0018_deepmd_deepmd_valid",
+"./valid_predict/____data_updated_sample_POSCAR_4_4_1_POSCAR_01x01x01_02_md_sys_0010_0002_0014_0001_0005_0058_0018_deepmd_valid",
+"./valid_predict/____data_updated_test_POSCAR_01x01x01_02_md_sys_0014_0016_0003_0004_0051_0020_deepmd_valid"
+
+	],
+        "_comment": "all"
+    },
+    "train": {
+        "type": "dp",
+        "numb_models": 4,
+        "config": {
+	    "init_model_policy": "yes",
+            "init_model_old_ratio": 0.90,
+            "init_model_numb_steps": 20000,
+            "init_model_start_lr": 1e-4,
+            "init_model_start_pref_e": 0.1,
+            "init_model_start_pref_f": 1000,
+
+            "_comment": "all"
+        },
+        "template_script": "train.json",
+        "_comment": "all"
+    },
+    "explore": {
+        "type": "lmp",
+        "config": {
+	   "command": "lmp -var restart 0"
+        },
+        "convergence": {
+            "type": "adaptive-lower",
+            "conv_tolerance": 0.03,
+            "_numb_candi_f": 200,
+            "rate_candi_f": 0.15,
+            "level_f_hi": 0.5,
+            "n_checked_steps": 4,
+            "_command": "all"
+        },
+        "max_numb_iter": 16,
+        "fatal_at_max": false,
+        "configuration_prefix": null,
+        "configurations": [
+            {
+                "type": "file",
+                "files": [
+                    "init"
+                ],
+                "fmt": "deepmd/npy/mixed"
+            }
+        ],
+        "stages": [
+            [
+                {
+                    "type": "lmp-template",
+                    "lmp": "template.lammps",
+                    "trj_freq": 20,
+                    "revisions": {
+                        "V_NSTEPS": [
+                            10000
+                        ],
+                        "V_TEMP": [
+                         873
+                        ],
+                        "V_DUMPFREQ": [
+                            20
+                        ]
+                    },
+                    "sys_idx": [
+                        0
+                    ],
+                    "n_sample":12 
+                }
+
+            ]
+        ],
+        "_comment": "all"
+    },
+    "fp": {
+        "type": "deepmd",
+        "task_max": 4000,
+        "run_config" : {
+            "teacher_model_path": "teacher_model.pt"
+        },
+        "inputs_config": {},
+        "_comment": "all"
+    }
+}
